@@ -1,22 +1,29 @@
 import streamlit as st
-import pandas as pd
+st.title("Calculator")
+st.write("This is a Simple calculator that can perform Addition,Substraction,Multiplication and Division")
 
-# Set the title of the app
-st.title("My Streamlit Web App")
+def calculator(num1,num2,operation):
+    if operation=="Add":
+      return num1 + num2
+    elif operation=="Substract":
+       return num1-num2
+    elif operation=="Multiply":
+       return num1* num2
+    elif operation=="Divide":
+       return num1/num2
+num1=st.number_input("Enter your first Number ", value=0)
+num2=st.number_input("Enter your second Number " ,value=0)  
+operation=st.radio("Select your operater",("Add","Substract","Multiply","Divide"))  
+if st.button("Calculate"):
+   try:
+      result=calculator(num1,num2,operation)
+      st.write(f"The result of {num1} {operation} {num2} is  : {result}")
+   except ZeroDivisionError as e:
+      st.error(e)
+   except ValueError as e:
+      st.error(e)
+   except Exception as e:
+      st.error(f"An error accured : {e}")
 
-# Display some simple text
-st.write("Hello! Welcome to my Streamlit web app!")
-
-# Create a text input box for user input
-name = st.text_input("Enter your name:")
-if name:
-    st.write(f"Hello, {name}!")
-
-# Display a simple DataFrame
-data = {'Name': ['Alice', 'Bob', 'Charlie'],
-        'Age': [25, 30, 35],
-        'City': ['New York', 'London', 'Tokyo']}
-df = pd.DataFrame(data)
-
-st.write("Here is some sample data:")
-st.dataframe(df)
+   
+calculator(num1,num2,operation)
